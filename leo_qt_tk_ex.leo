@@ -1,0 +1,1498 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created by Leo: http://leoeditor.com/leo_toc.html -->
+<?xml-stylesheet ekr_test?>
+<leo_file xmlns:leo="http://leoeditor.com/namespaces/leo-python-editor/1.1" >
+<leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/>
+<globals body_outline_ratio="0.5" body_secondary_ratio="0.5">
+	<global_window_position top="50" left="50" height="500" width="700"/>
+	<global_log_window_position top="0" left="0" height="0" width="0"/>
+</globals>
+<preferences/>
+<find_panel_settings/>
+<vnodes>
+<v t="amd.20150318155833.44"><vh>@settings</vh>
+<v t="amd.20150318155833.45"><vh>@data qt-gui-plugin-style-sheet</vh></v>
+<v t="amd.20150318155833.46"><vh>@string initial_split_orientation = horizontal</vh></v>
+<v t="amd.20150318155833.47"><vh>@string rst3_write_intermediate_extension = .rst</vh></v>
+</v>
+<v t="amd.20150318154017.40"><vh>Tetris</vh></v>
+<v t="amd.20150318154611.40"><vh>PyQt4 version</vh></v>
+<v t="amd.20150318155833.40"><vh>getinput</vh></v>
+<v t="amd.20150318155833.49"><vh>@button new to wp</vh></v>
+<v t="amd.20150319203708.48"><vh>@button edit to wp</vh></v>
+<v t="amd.20150319203708.45"><vh>Leo Editor API</vh></v>
+<v t="amd.20150320090250.45" a="E"><vh>利用 Leo Editor 作為 Wordpress client</vh>
+<v t="amd.20150320090250.42" a="E"><vh>demo-2015course.rhcloud.com</vh>
+<v t="amd.20150318155833.50" a="E"><vh>這是第1週的心得</vh>
+<v t="amd.20150321081347.44"><vh>文章 id</vh></v>
+</v>
+<v t="amd.20150319203708.49" a="E"><vh>這是第2週的小小心得 </vh>
+<v t="amd.20150321081347.45"><vh>文章 id</vh></v>
+</v>
+</v>
+<v t="amd.20150320090250.47" a="E"><vh>wordpress-2015course.rhcloud.com</vh>
+<v t="amd.20150321081347.47"><vh>寫網誌的格式</vh></v>
+</v>
+<v t="amd.20150320090250.46" a="E"><vh>wordpress-chiamingyen.rhcloud.com</vh>
+<v t="amd.20150321081347.46"><vh>寫網誌的格式</vh></v>
+<v t="amd.20150321081347.48" a="E"><vh>Leo Editor 再出發</vh>
+<v t="amd.20150321081347.49"><vh>文章 id</vh></v>
+</v>
+</v>
+</v>
+<v t="amd.20150318155833.51" a="E"><vh>節點資料應用範例</vh>
+<v t="amd.20150321081347.40"><vh>p 的用法</vh></v>
+<v t="amd.20150320090250.40"><vh>從檔案讀取帳號密碼</vh></v>
+</v>
+<v t="amd.20150318155833.41" a="E"><vh>send to wp</vh>
+<v t="amd.20150318155833.42"><vh>基本操作流程</vh></v>
+</v>
+</vnodes>
+<tnodes>
+<t tx="amd.20150318154017.40">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+
+Tetяis
+
+    Keys
+    --------------------------------------------------
+    left   : request to translate left by one column
+    right  : request to translate right by one column
+    up     : request to do a counterclockwise rotation
+    down   : request to translate down by one row
+
+__author__ = 'Leonardo Vidarte'
+
+"""
+
+import time
+import random
+import copy
+
+import tkinter as tk
+from tkinter import messagebox as tkMessageBox
+
+
+
+# ===============================================
+# WINDOW OPTIONS
+# ===============================================
+BG_COLOR = 'black'
+
+# Board
+BOARD_BG_COLOR = 'black'
+BOARD_FG_COLOR = 'white'
+BOARD_GRID_COLOR = '#333'
+
+# Status
+FONT_SIZE = 12
+FONT_COLOR = 'white'
+
+# Tetrominos
+TETROMINO_FG_COLOR = 'black'
+TETROMINO_BORDER_WIDTH = 2 # in pixels
+I_COLOR = 'cyan'
+O_COLOR = 'yellow'
+T_COLOR = 'magenta'
+J_COLOR = 'blue'
+L_COLOR = 'orange'
+S_COLOR = 'green'
+Z_COLOR = 'red'
+COMPLETE_ROW_BG_COLOR = 'white' # None for inherit
+COMPLETE_ROW_FG_COLOR = None
+# ===============================================
+
+
+# Levels
+LEVEL_0_DELAY = 1000 # inital delay between steps
+ROWS_BY_LEVEL = 10
+POINTS = [40, 100, 300, 1200] # 1 , 2, 3, Tetris
+
+# 
+WIDTH = 10
+HEIGHT = 20
+SIZE = 20 # square size in pixels
+
+# Tetrominos
+I = (
+     ((0,0,0,0),
+      (1,1,1,1),
+      (0,0,0,0),
+      (0,0,0,0)),
+     ((0,1,0,0),
+      (0,1,0,0),
+      (0,1,0,0),
+      (0,1,0,0)),
+     )
+
+O = (
+     ((1,1),
+      (1,1)),
+     )
+
+T = (
+     ((0,0,0),
+      (1,1,1),
+      (0,1,0)),
+     ((0,1,0),
+      (1,1,0),
+      (0,1,0)),
+     ((0,1,0),
+      (1,1,1),
+      (0,0,0)),
+     ((0,1,0),
+      (0,1,1),
+      (0,1,0)),
+     )
+
+J = (
+     ((0,1,0),
+      (0,1,0),
+      (1,1,0)),
+     ((1,0,0),
+      (1,1,1),
+      (0,0,0)),
+     ((0,1,1),
+      (0,1,0),
+      (0,1,0)),
+     ((0,0,0),
+      (1,1,1),
+      (0,0,1)),
+     )
+
+L = (
+     ((0,1,0),
+      (0,1,0),
+      (0,1,1)),
+     ((0,0,0),
+      (1,1,1),
+      (1,0,0)),
+     ((1,1,0),
+      (0,1,0),
+      (0,1,0)),
+     ((0,0,1),
+      (1,1,1),
+      (0,0,0)),
+     )
+
+S = (
+     ((0,0,0),
+      (0,1,1),
+      (1,1,0)),
+     ((1,0,0),
+      (1,1,0),
+      (0,1,0)),
+     )
+
+Z = (
+     ((0,0,0),
+      (1,1,0),
+      (0,1,1)),
+     ((0,0,1),
+      (0,1,1),
+      (0,1,0)),
+     )
+
+
+
+class Application(tk.Frame):
+
+    def __init__(self, width=WIDTH, height=HEIGHT, size=SIZE):
+        tk.Frame.__init__(self, bg=BG_COLOR)
+        self.grid()
+        self.width = width
+        self.height = height
+        self.size = size
+        self.create_widgets()
+        self.draw_grid()
+        self.create_events()
+        self.tetrominos = self.get_tetrominos()
+        self.game_init()
+
+    def create_widgets(self):
+        top = self.winfo_toplevel()
+        top.config(bg=BG_COLOR)
+
+        width = self.width * self.size
+        height = self.height * self.size
+        self.canvas = tk.Canvas(self, width=width, height=height,
+                                bg=BOARD_BG_COLOR,
+                                highlightbackground=BOARD_FG_COLOR)
+        self.canvas.grid(row=0, column=0, padx=20, pady=20)
+
+        lb_status = self.lb_status = tk.Label(
+            self, bg=BG_COLOR, fg=FONT_COLOR, font=('monospace', FONT_SIZE))
+        lb_status.grid(row=0, column=1, padx=(0, 20), pady=20, sticky=tk.N)
+
+    def draw_grid(self):
+        for i in range(self.width - 1):
+            x = (self.size * i) + self.size
+            y0 = 0
+            y1 = self.size * self.height
+            self.canvas.create_line(x, y0, x, y1, fill=BOARD_GRID_COLOR)
+        for i in range(self.height - 1):
+            x0 = 0
+            x1 = self.size * self.width
+            y = (self.size * i) + self.size
+            self.canvas.create_line(x0, y, x1, y, fill=BOARD_GRID_COLOR)
+
+    def create_events(self):
+        self.canvas.bind_all('&lt;KeyPress-Up&gt;', self.rotate)
+        self.canvas.bind_all('&lt;KeyPress-Down&gt;', self.move)
+        self.canvas.bind_all('&lt;KeyPress-Left&gt;', self.move)
+        self.canvas.bind_all('&lt;KeyPress-Right&gt;', self.move)
+
+    def get_tetrominos(self):
+        tetrominos = []
+        for name in 'IOTLJSZ':
+            tetromino = globals()[name]
+            data = {
+                'name'  : name,
+                'pieces': tetromino,
+                'actual': 0,
+                'color' : globals()[name + '_COLOR'],
+                'coords': self.get_init_coords(tetromino),
+                'rows': len(tetromino[0]),
+                'cols': len(tetromino[0][0]),
+                'total_pieces': len(tetromino),
+                'can_rotate'  : True if len(tetromino) &gt; 1 else False,
+                'ids': [],
+                }
+            tetrominos.append(data)
+        return tetrominos
+
+    def get_init_coords(self, tetromino):
+        return (int(self.width / 2.0 - len(tetromino[0]) / 2.0), 1)
+
+    def game_init(self):
+        self.board = self.get_init_board()
+        self.next = copy.deepcopy(random.choice(self.tetrominos))
+        self.tetromino = None
+        self.status = self.get_init_status()
+        self.delay = LEVEL_0_DELAY
+        self.job_id = None
+        self.running = True
+        self.step()
+
+    def get_init_board(self):
+        if getattr(self, 'board', None) is None:
+            self.board = [[0] * self.width for _ in range(self.height)]
+        else:
+            for y in range(self.height):
+                for x in range(self.width):
+                    if self.board[y][x]:
+                        self.canvas.delete(self.board[y][x])
+                        self.board[y][x] = 0
+        return self.board
+
+    def get_init_status(self):
+        return {'score': 0, 'rows': 0, 'level': 0,
+                'O': 0, 'I': 0, 'S': 0, 'T': 0, 'Z': 0, 'L': 0, 'J': 0,
+                'total': 0, 'next': ''}
+
+    def step(self):
+        if self.tetromino and self.can_be_moved('Down'):
+            self.move_tetromino((0, 1))
+            self.job_id = self.canvas.after(self.delay, self.step)
+        else:
+            self.check_status()
+            if self.is_gameover(self.next):
+                title = 'Game Over'
+                message = 'Your score: %d' % self.status['score']
+                tkMessageBox.showinfo(title, message)
+                self.game_init()
+            else:
+                self.tetromino = self.next
+                self.next = copy.deepcopy(random.choice(self.tetrominos))
+                self.status[self.tetromino['name']] += 1
+                self.status['total'] += 1
+                self.status['next'] = self.next['name']
+                self.update_label_status()
+                self.draw_tetromino()
+                self.job_id = self.canvas.after(self.delay, self.step)
+
+    def check_status(self):
+        rows = []
+        for row in range(self.height):
+            if 0 not in self.board[row]:
+                rows.append(row)
+        if rows:
+            self.del_rows(rows)
+            self.set_score(rows)
+
+    def del_rows(self, rows):
+        for row in rows:
+            for id in self.board[row]:
+                self.canvas.tag_raise(id) # bring to front
+                self.canvas.itemconfig(id, fill=COMPLETE_ROW_BG_COLOR,
+                                       outline=COMPLETE_ROW_FG_COLOR)
+        self.canvas.update()
+        time.sleep(0.5)
+        for row in rows:
+            for id in self.board[row]:
+                self.canvas.delete(id)
+            del self.board[row]
+            self.board.insert(0, [0] * self.width)
+            for row0 in range(row + 1):
+                for id0 in self.board[row0]:
+                    self.canvas.move(id0, 0, self.size)
+        self.canvas.update()
+
+    def set_score(self, rows):
+        points = POINTS[len(rows) - 1]
+        self.status['rows'] += len(rows)
+        if self.status['rows'] % ROWS_BY_LEVEL == 0:
+            self.status['level'] += 1
+            if self.delay &gt; 100:
+                self.delay -= 100
+        self.status['score'] += points
+        self.update_label_status()
+
+    def update_label_status(self):
+        lines = [
+            'Score: %6s' % self.status['score'],
+            '',
+            'Level: %6s' % self.status['level'],
+            'Rows : %6s' % self.status['rows'],
+            '',
+            'O    : %6s' % self.status['O'],
+            'I    : %6s' % self.status['I'],
+            'J    : %6s' % self.status['J'],
+            'L    : %6s' % self.status['L'],
+            'T    : %6s' % self.status['T'],
+            'S    : %6s' % self.status['S'],
+            'Z    : %6s' % self.status['Z'],
+            'Total: %6s' % self.status['total'],
+            '',
+            'Next : %6s' % self.status['next'],
+            ] 
+        self.lb_status.config(text='\n'.join(lines))
+
+    def is_gameover(self, next):
+        x, y = next['coords']
+        for y0 in range(next['rows']):
+            for x0 in range(next['cols']):
+                x1 = x0 + x
+                y1 = y0 + y
+                if self.board[y1][x1]:
+                    self.running = False
+                    self.canvas.after_cancel(self.job_id)
+                    return True
+        return False
+
+    def draw_tetromino(self):
+        self.del_tetromino()
+        piece = self.tetromino['pieces'][self.tetromino['actual']]
+        x0, y0 = self.tetromino['coords']
+        for y in range(self.tetromino['rows']):
+            for x in range(self.tetromino['cols']):
+                if piece[y][x] == 1:
+                    x1 = (x0 + x) * self.size
+                    y1 = (y0 + y) * self.size
+                    x2 = x1 + self.size
+                    y2 = y1 + self.size
+                    id = self.canvas.create_rectangle(
+                            x1, y1, x2, y2, width=TETROMINO_BORDER_WIDTH,
+                            outline=TETROMINO_FG_COLOR,
+                            fill=self.tetromino['color'])
+                    self.tetromino['ids'].append(id)
+                    self.board[y0 + y][x0 + x] = id
+        self.canvas.update()
+
+    def del_tetromino(self):
+        if self.tetromino['ids']:
+            for y in range(self.height):
+                for x in range(self.width):
+                    if self.board[y][x] in self.tetromino['ids']:
+                        self.board[y][x] = 0
+            for id in self.tetromino['ids']:
+                self.canvas.delete(id)
+            self.tetromino['ids'] = []
+
+    def rotate(self, event):
+        if self.tetromino['can_rotate']:
+            if self.tetromino['actual'] &lt; self.tetromino['total_pieces'] - 1:
+                next = self.tetromino['actual'] + 1
+            else:
+                next = 0
+            if self.can_be_rotated(next):
+                self.tetromino['actual'] = next
+                self.draw_tetromino()
+
+    def can_be_rotated(self, next):
+        piece = self.tetromino['pieces'][next]
+        board = self.board
+        x, y = self.tetromino['coords']
+        for y0 in range(self.tetromino['rows']):
+            for x0 in range(self.tetromino['cols']):
+                if piece[y0][x0] == 1:
+                    if x == -1 and x0 == 1:
+                        return False
+                    if x + x0 &gt;= self.width:
+                        return False
+                    if y + y0 &gt;= self.height:
+                        return False
+                    x1 = x + x0
+                    y1 = y + y0
+                    if board[y1][x1] and \
+                       (board[y1][x1] not in self.tetromino['ids']):
+                        return False
+        return True
+
+    def move(self, event):
+        if self.running and self.can_be_moved(event.keysym):
+            x, y = self.tetromino['coords']
+            if event.keysym == 'Left':
+                self.move_tetromino((-1, 0))
+            if event.keysym == 'Right':
+                self.move_tetromino((1, 0))
+            if event.keysym == 'Down':
+                self.canvas.after_cancel(self.job_id)
+                self.move_tetromino((0, 1))
+                self.job_id = self.canvas.after(self.delay, self.step)
+
+    def move_tetromino(self, offset):
+        x, y = offset
+        ranges = {
+            (-1, 0): ((0, self.width, 1), (0, self.height, 1)),
+            ( 1, 0): ((self.width-1, -1, -1), (0, self.height, 1)),
+            ( 0, 1): ((0, self.width, 1), (self.height-1, -1, -1))
+            }
+
+        x_start_stop_step, y_start_stop_step = ranges[offset]
+        for y0 in range(*y_start_stop_step):
+            for x0 in range(*x_start_stop_step):
+                id = self.board[y0][x0]
+                if id in self.tetromino['ids']:
+                    self.board[y0 + y][x0 + x] = self.board[y0][x0]
+                    self.board[y0][x0] = 0
+                    self.canvas.move(id, x * self.size, y * self.size)
+
+        x1, y1 = self.tetromino['coords']
+        self.tetromino['coords'] = (x1 + x, y1 + y)
+        self.canvas.update()
+
+    def can_be_moved(self, direction):
+        piece = self.tetromino['pieces'][self.tetromino['actual']]
+        board = self.board
+        x, y = self.tetromino['coords']
+        for y0 in range(self.tetromino['rows']):
+            for x0 in range(self.tetromino['cols']):
+                if piece[y0][x0] == 1:
+                    if direction == 'Left':
+                        x1 = x + x0 - 1
+                        y1 = y + y0
+                        if x1 &lt; 0 or (board[y1][x1] and
+                           board[y1][x1] not in self.tetromino['ids']):
+                            return False
+                    if direction == 'Right':
+                        x1 = x + x0 + 1
+                        y1 = y + y0
+                        if x1 &gt;= self.width or (board[y1][x1] and
+                           board[y1][x1] not in self.tetromino['ids']):
+                            return False
+                    if direction == 'Down':
+                        x1 = x + x0
+                        y1 = y + y0 + 1
+                        if y1 &gt;= self.height or (board[y1][x1] and
+                           board[y1][x1] not in self.tetromino['ids']):
+                            return False
+        return True
+
+
+prog = u'Tetяis'
+
+from optparse import OptionParser
+parser = OptionParser(description=prog)
+parser.add_option('-W', '--width', type=int, default=WIDTH,
+                  help="board width")
+parser.add_option('-H', '--height', type=int, default=HEIGHT,
+                  help="board height")
+parser.add_option('-s', '--size', type=int, default=SIZE,
+                  help="square size")
+parser.add_option('-t', '--theme', type=str, default=None,
+                  help="color config file")
+args, _ = parser.parse_args()
+
+if args.theme:
+    if args.theme.endswith('.py'):
+        args.theme = args.theme[:-3]
+    try:
+        exec('from %s import *' % args.theme)
+    except ImportError:
+        pass
+
+app = Application(args.width, args.height, args.size)
+app.master.title(prog)
+app.mainloop()
+</t>
+<t tx="amd.20150318154611.40">
+#coding: utf-8
+# source: http://zetcode.com/tutorials/pyqt4/thetetrisgame/
+# tetris.py
+
+import sys
+import random
+from PyQt4 import QtCore, QtGui
+
+class Tetris(QtGui.QMainWindow):
+    def __init__(self):
+        QtGui.QMainWindow.__init__(self)
+        
+        self.setGeometry(300, 300, 180, 380)
+        self.setWindowTitle("俄羅斯方塊")
+        self.tetrisboard = Board(self)
+        self.setCentralWidget(self.tetrisboard)
+        self.statusbar = self.statusBar()
+        self.connect(self.tetrisboard, QtCore.SIGNAL("messageToStatusbar(QString)"), 
+        self.statusbar, QtCore.SLOT("showMessage(QString)"))
+        self.tetrisboard.start()
+        self.center()
+
+    def center(self):
+        screen = QtGui.QDesktopWidget().screenGeometry()
+        size =  self.geometry()
+        self.move((screen.width()-size.width())/2,(screen.height()-size.height())/2)
+
+class Board(QtGui.QFrame):
+    BoardWidth = 10
+    BoardHeight = 22
+    Speed = 300
+
+    def __init__(self, parent):
+        QtGui.QFrame.__init__(self, parent)
+        self.timer = QtCore.QBasicTimer()
+        self.isWaitingAfterLine = False
+        self.curPiece = Shape()
+        self.nextPiece = Shape()
+        self.curX = 0
+        self.curY = 0
+        self.numLinesRemoved = 0
+        self.board = []
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.isStarted = False
+        self.isPaused = False
+        self.clearBoard()
+
+        self.nextPiece.setRandomShape()
+
+    def shapeAt(self, x, y):
+        return self.board[int((y * Board.BoardWidth) + x)]
+
+    def setShapeAt(self, x, y, shape):
+        self.board[int((y * Board.BoardWidth) + x)] = shape
+
+    def squareWidth(self):
+        return self.contentsRect().width() / Board.BoardWidth
+
+    def squareHeight(self):
+        return self.contentsRect().height() / Board.BoardHeight
+
+    def start(self):
+        if self.isPaused:
+            return
+            
+        self.isStarted = True
+        self.isWaitingAfterLine = False
+        self.numLinesRemoved = 0
+        self.clearBoard()
+        self.emit(QtCore.SIGNAL("messageToStatusbar(QString)"), str(self.numLinesRemoved))
+        self.newPiece()
+        self.timer.start(Board.Speed, self)
+
+    def pause(self):
+        if not self.isStarted:
+            return
+            
+        self.isPaused = not self.isPaused
+        if self.isPaused:
+            self.timer.stop()
+            self.emit(QtCore.SIGNAL("messageToStatusbar(QString)"), "paused")
+        else:
+            self.timer.start(Board.Speed, self)
+            self.emit(QtCore.SIGNAL("messageToStatusbar(QString)"), str(self.numLinesRemoved))
+        
+        self.update()
+
+    def paintEvent(self, event):
+        painter = QtGui.QPainter(self)
+        rect = self.contentsRect()
+        boardTop = rect.bottom() - Board.BoardHeight * self.squareHeight()
+        
+        for i in range(Board.BoardHeight):
+            for j in range(Board.BoardWidth):
+                shape = self.shapeAt(j, Board.BoardHeight - i - 1)
+                if shape != Tetrominoes.NoShape:
+                    self.drawSquare(painter, 
+                    rect.left() + j * self.squareWidth(), 
+                    boardTop + i * self.squareHeight(), shape)
+                    
+        if self.curPiece.shape() != Tetrominoes.NoShape:
+            for i in range(4):
+                x = self.curX + self.curPiece.x(i)
+                y = self.curY - self.curPiece.y(i)
+                self.drawSquare(painter, rect.left() + x * self.squareWidth(),
+                    boardTop + (Board.BoardHeight - y - 1) * self.squareHeight(),
+                    self.curPiece.shape())
+
+    def keyPressEvent(self, event):
+        if not self.isStarted or self.curPiece.shape() == Tetrominoes.NoShape:
+            QtGui.QWidget.keyPressEvent(self, event)
+            return
+            
+        key = event.key()
+        # 按下 p 鍵, 程式會暫停
+        if key == QtCore.Qt.Key_P:
+            self.pause()
+            return
+        if self.isPaused:
+            return
+        # 利用左右下上等建來翻轉方塊
+        elif key == QtCore.Qt.Key_Left:
+            self.tryMove(self.curPiece, self.curX - 1, self.curY)
+        elif key == QtCore.Qt.Key_Right:
+            self.tryMove(self.curPiece, self.curX + 1, self.curY)
+        elif key == QtCore.Qt.Key_Down:
+            self.tryMove(self.curPiece.rotatedRight(), self.curX, self.curY)
+        elif key == QtCore.Qt.Key_Up:
+            self.tryMove(self.curPiece.rotatedLeft(), self.curX, self.curY)
+        # 按下 Space 鍵會 dropDown(), 直接落下
+        elif key == QtCore.Qt.Key_Space:
+            self.dropDown()
+        # 按下 D 鍵則方塊往下一行
+        elif key == QtCore.Qt.Key_D:
+            self.oneLineDown()
+        else:
+            QtGui.QWidget.keyPressEvent(self, event)
+
+    def timerEvent(self, event):
+        if event.timerId() == self.timer.timerId():
+            if self.isWaitingAfterLine:
+                self.isWaitingAfterLine = False
+                self.newPiece()
+            else:
+                self.oneLineDown()
+        else:
+            QtGui.QFrame.timerEvent(self, event)
+
+    def clearBoard(self):
+        for i in range(Board.BoardHeight * Board.BoardWidth):
+            self.board.append(Tetrominoes.NoShape)
+
+    def dropDown(self):
+        newY = self.curY
+        while newY &gt; 0:
+            if not self.tryMove(self.curPiece, self.curX, newY - 1):
+                break
+            newY -= 1
+        self.pieceDropped()
+
+    def oneLineDown(self):
+        if not self.tryMove(self.curPiece, self.curX, self.curY - 1):
+            self.pieceDropped()
+
+    def pieceDropped(self):
+        for i in range(4):
+            x = self.curX + self.curPiece.x(i)
+            y = self.curY - self.curPiece.y(i)
+            self.setShapeAt(x, y, self.curPiece.shape())
+        self.removeFullLines()
+        if not self.isWaitingAfterLine:
+            self.newPiece()
+
+    def removeFullLines(self):
+        numFullLines = 0
+        rowsToRemove = []
+        for i in range(Board.BoardHeight):
+            n = 0
+            for j in range(Board.BoardWidth):
+                if not self.shapeAt(j, i) == Tetrominoes.NoShape:
+                    n = n + 1
+            if n == 10:
+                rowsToRemove.append(i)
+        rowsToRemove.reverse()
+        
+        for m in rowsToRemove:
+            for k in range(m, Board.BoardHeight):
+                for l in range(Board.BoardWidth):
+                    self.setShapeAt(l, k, self.shapeAt(l, k + 1))
+        
+        numFullLines = numFullLines + len(rowsToRemove)
+
+        if numFullLines &gt; 0:
+            self.numLinesRemoved = self.numLinesRemoved + numFullLines
+            self.emit(QtCore.SIGNAL("messageToStatusbar(QString)"), str(self.numLinesRemoved))
+            self.isWaitingAfterLine = True
+            self.curPiece.setShape(Tetrominoes.NoShape)
+            self.update()
+
+    def newPiece(self):
+        self.curPiece = self.nextPiece
+        self.nextPiece.setRandomShape()
+        self.curX = Board.BoardWidth / 2 + 1
+        self.curY = Board.BoardHeight - 1 + self.curPiece.minY()
+        if not self.tryMove(self.curPiece, self.curX, self.curY):
+            self.curPiece.setShape(Tetrominoes.NoShape)
+            self.timer.stop()
+            self.isStarted = False
+            self.emit(QtCore.SIGNAL("messageToStatusbar(QString)"), "Game over")
+
+
+
+    def tryMove(self, newPiece, newX, newY):
+        for i in range(4):
+            x = newX + newPiece.x(i)
+            y = newY - newPiece.y(i)
+            if x &lt; 0 or x &gt;= Board.BoardWidth or y &lt; 0 or y &gt;= Board.BoardHeight:
+                return False
+            if self.shapeAt(x, y) != Tetrominoes.NoShape:
+                return False
+        self.curPiece = newPiece
+        self.curX = newX
+        self.curY = newY
+        self.update()
+        return True
+
+    def drawSquare(self, painter, x, y, shape):
+        colorTable = [0x000000, 0xCC6666, 0x66CC66, 0x6666CC,
+                      0xCCCC66, 0xCC66CC, 0x66CCCC, 0xDAAA00]
+        color = QtGui.QColor(colorTable[shape])
+        painter.fillRect(x + 1, y + 1, self.squareWidth() - 2, self.squareHeight() - 2, color)
+        painter.setPen(color.light())
+        painter.drawLine(x, y + self.squareHeight() - 1, x, y)
+        painter.drawLine(x, y, x + self.squareWidth() - 1, y)
+        painter.setPen(color.dark())
+        painter.drawLine(x + 1, y + self.squareHeight() - 1,
+            x + self.squareWidth() - 1, y + self.squareHeight() - 1)
+        painter.drawLine(x + self.squareWidth() - 1, y + self.squareHeight() - 1, x + self.squareWidth() - 1, y + 1)
+
+
+class Tetrominoes(object):
+    NoShape = 0
+    ZShape = 1
+    SShape = 2
+    LineShape = 3
+    TShape = 4
+    SquareShape = 5
+    LShape = 6
+    MirroredLShape = 7
+
+
+class Shape(object):
+    coordsTable = (
+        ((0, 0),     (0, 0),     (0, 0),     (0, 0)),
+        ((0, -1),    (0, 0),     (-1, 0),    (-1, 1)),
+        ((0, -1),    (0, 0),     (1, 0),     (1, 1)),
+        ((0, -1),    (0, 0),     (0, 1),     (0, 2)),
+        ((-1, 0),    (0, 0),     (1, 0),     (0, 1)),
+        ((0, 0),     (1, 0),     (0, 1),     (1, 1)),
+        ((-1, -1),   (0, -1),    (0, 0),     (0, 1)),
+        ((1, -1),    (0, -1),    (0, 0),     (0, 1))
+    )
+
+    def __init__(self):
+        self.coords = [[0,0] for i in range(4)]
+        self.pieceShape = Tetrominoes.NoShape
+        self.setShape(Tetrominoes.NoShape)
+
+    def shape(self):
+        return self.pieceShape
+
+    def setShape(self, shape):
+        table = Shape.coordsTable[shape]
+        for i in range(4):
+            for j in range(2):
+                self.coords[i][j] = table[i][j]
+        self.pieceShape = shape
+
+    def setRandomShape(self):
+        self.setShape(random.randint(1, 7))
+
+    def x(self, index):
+        return self.coords[index][0]
+
+    def y(self, index):
+        return self.coords[index][1]
+
+    def setX(self, index, x):
+        self.coords[index][0] = x
+
+    def setY(self, index, y):
+        self.coords[index][1] = y
+
+    def minX(self):
+        m = self.coords[0][0]
+        for i in range(4):
+            m = min(m, self.coords[i][0])
+        return m
+
+    def maxX(self):
+        m = self.coords[0][0]
+        for i in range(4):
+            m = max(m, self.coords[i][0])
+        return m
+
+    def minY(self):
+        m = self.coords[0][1]
+        for i in range(4):
+            m = min(m, self.coords[i][1])
+        return m
+
+    def maxY(self):
+        m = self.coords[0][1]
+        for i in range(4):
+            m = max(m, self.coords[i][1])
+        return m
+
+    def rotatedLeft(self):
+        if self.pieceShape == Tetrominoes.SquareShape:
+            return self
+        result = Shape()
+        result.pieceShape = self.pieceShape
+        for i in range(4):
+            result.setX(i, self.y(i))
+            result.setY(i, -self.x(i))
+        return result
+
+    def rotatedRight(self):
+        if self.pieceShape == Tetrominoes.SquareShape:
+            return self
+        result = Shape()
+        result.pieceShape = self.pieceShape
+        for i in range(4):
+            result.setX(i, -self.y(i))
+            result.setY(i, self.x(i))
+        return result
+
+
+app = QtGui.QApplication(sys.argv)
+tetris = Tetris()
+tetris.show()
+# 在 PyQt 4.5 與 Python3 環境下可以直接使用 exec() 但是也可以使用舊版的 exec_()
+#sys.exit(app.exec_())
+c.my_test = tetris</t>
+<t tx="amd.20150318155833.40">def getInput (event=None):
+
+   stateName = 'get-input'
+   k = c.k
+   state = k.getState(stateName)
+
+   if state == 0:
+       k.setLabelBlue('輸入為: ')
+       k.getArg(event,stateName,1,getInput)
+   else:
+       k.clearState()
+       g.es_print('你的輸入為: %s' % k.arg)
+
+getInput()</t>
+<t tx="amd.20150318155833.41">@language python
+#coding: utf-8
+import xmlrpc.client
+import datetime
+import os
+os.environ['TZ'] = 'Asia/Taipei'
+ 
+wp_url = "https://demo-2015course.rhcloud.com/xmlrpc.php"
+wp_username = "帳號"
+wp_password = "密碼"
+wp_blogid = "0"
+ 
+status_draft = 0
+status_published = 1
+ 
+server = xmlrpc.client.ServerProxy(wp_url)
+ 
+title = str(datetime.datetime.now())+"測試是否可以現在時間上傳網誌, 再試一次"
+content = '''這是以 Python 程式新增的網誌內容!
+並且進行跳行
+前面這裡跳行.&lt;!--more--&gt;'''
+content +='''[python]'''
+content +='''
+#coding: utf-8
+import xmlrpc.client
+import datetime
+import os
+os.environ['TZ'] = 'Asia/Taipei'
+for 索引 in range(10):
+    print("測試")
+'''
+content +="[/python]"
+# 指定時間出版
+'''
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime("2013-01-01 00:00",
+"%Y-%m-%d %H:%M"))
+'''
+# 以現在時間出版, 考慮與 Server 時間差八個小時 (480 分鐘), 因此要在 8 個小時前發表
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime((datetime.datetime.now()- \
+datetime.timedelta(minutes=480)).strftime('%Y-%m-%d %H:%M'),"%Y-%m-%d %H:%M"))
+categories = ["Uncategorized"]
+tags = ["python", "測試"]
+data = {'title': title, 'description': content, 'dateCreated': date_created, 'categories': categories, 'mt_keywords': tags}
+ 
+post_id = server.metaWeblog.newPost(wp_blogid, wp_username, wp_password, data, status_published)
+g.es("post_id 為", post_id)
+g.es("已經送出資料!")
+'''
+其他 metaWeblog 的用法:
+metaWeblog.newPost (blogid, username, password, struct, publish) returns string(postid)
+metaWeblog.editPost (postid, username, password, struct, publish) returns true
+metaWeblog.getPost (postid, username, password) returns struct(blog content)
+'''</t>
+<t tx="amd.20150318155833.42">送出資料後, 取得 post_id 存在特定的 children 節點上, 然後隨後的編輯更動將依此 post_id 擷取資料?
+帳號密碼可以使用 query 的方式, 在送出或編輯資料時, 由使用者輸入</t>
+<t tx="amd.20150318155833.44"></t>
+<t tx="amd.20150318155833.45">QSplitter::handle {
+    background-color: #CAE1FF; /* lightSteelBlue1 */
+}
+
+QStackedWidget {
+    /* background-color:lightpink; */
+    border-color: red;
+    padding: 0px;
+    /* border-width: 0px; */
+    /* background-color: yellow; */
+}
+
+QSplitter {
+    border-color: white;
+    background-color: white;
+    border-style: solid;
+}
+
+QTreeWidget {
+    /* These apply to the selected item, but not to editing items.*/
+    background-color: #ffffec; /* Leo's traditional tree color */
+    selection-color: black; /* was white */
+    selection-background-color: lightgrey;
+    /* font-family: SansSerif; */
+    /*font-family: DejaVu Sans Mono;*/
+    font-family:YaHei Mono;
+    /* 標題字型大小設定 */
+    font-size: 22px;
+    font-weight: normal; /* normal,bold,100,..,900 */
+    font-style: normal; /* normal, italic,oblique */
+ }
+
+/* Headline edit widgets */
+QTreeWidget QLineEdit {
+    background-color: cornsilk;
+    selection-color: white;
+    selection-background-color: blue;
+    /*font-family: DejaVu Sans Mono;*/    
+    font-family:YaHei Mono;
+    /* 沒有特別對應字型大小 */
+    font-size: 22px;
+    font-weight: normal; /* normal,bold,100,..,900 */
+    font-style: normal; /* normal, italic,oblique */
+}
+
+/* The log panes */
+QTextEdit {
+    background-color: #f2fdff;
+    selection-color: red;
+    selection-background-color: blue;
+    /* font-family: Courier New; */
+    font-family:YaHei Mono;
+    /* log font 大小 */
+    font-size: 22px;
+    font-weight: normal; /* normal,bold,100,..,900 */
+    font-style: normal; /* normal, italic,oblique */
+}
+
+/* The body pane */
+QTextEdit#richTextEdit {
+    background-color: #fdf5f5; /* A kind of pink. */
+    selection-color: white;
+    selection-background-color: red;
+    /*font-family: DejaVu Sans Mono;*/
+    /* font-family: Courier New; */
+    font-family:YaHei Mono;
+    /* 內文字型大小 */
+    font-size: 22px;
+    font-weight: normal; /* normal,bold,100,..,900 */
+    font-style: normal; /* normal,italic,oblique */
+}
+
+QLabel {
+    font-family:YaHei Mono;
+    /* 下方的 Minibuffer 標題字型大小 */
+    font-size: 22px;
+    font-weight: normal; /* normal,bold,100,..,900 */
+    font-style: normal; /* normal,italic,oblique */
+}
+
+/* Editor labels */
+QLineEdit#editorLabel {
+    background-color: #ffffec;
+    font-family:YaHei Mono;
+    /* 沒有直接對應字型大小 */
+    font-size: 22px;
+    font-weight: normal; /* normal,bold,100,..,900 */
+    font-style: normal; /* normal,italic,oblique */
+    border: 2px;
+    margin: 2px;
+}</t>
+<t tx="amd.20150318155833.46">horizontal: body pane to the left
+vertical: body pane on the botton</t>
+<t tx="amd.20150318155833.47"></t>
+<t tx="amd.20150318155833.49">@language python
+#coding: utf-8
+import xmlrpc.client
+import datetime
+import os
+
+def get_cat_tag_content(data):
+    data_list = data.split("\n")
+    # 只有一項資料的 category 型別為字串
+    category = data_list[0]
+    # 只有一項資料的 tags 型別為字串
+    tags = data_list[1]
+    # 有多項資料的 content 型別為數列
+    # 再將第3行之後的資料數列串回成以跳行隔開的資料
+    content = "\n".join(data_list[2:])
+    return category, tags, content
+    
+os.environ['TZ'] = 'Asia/Taipei'
+
+#################################
+# Open a file
+fo = open(p.parent().b, "r+")
+data = []
+for line in fo.readlines():
+    data.append(line)
+    #print(line)
+#print(data[0])
+ 
+# Close opend file
+fo.close()
+ 
+# 從網誌節點的 parent().h 取得 wp_url
+# 從網誌節點的 parent().b 取得帳號與密碼對應的文字檔案路徑
+wp_url = "https://"+p.parent().h+"/xmlrpc.php"
+wp_username = data[0]
+wp_password = data[1]
+#################################
+wp_blogid = "0"
+ 
+status_draft = 0
+status_published = 1
+ 
+server = xmlrpc.client.ServerProxy(wp_url)
+ 
+title = p.h
+#content = p.b
+category_str, tags_str, content = get_cat_tag_content(p.b)
+# 指定時間出版
+'''
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime("2013-01-01 00:00",
+"%Y-%m-%d %H:%M"))
+'''
+# 以現在時間出版, 考慮與 Server 時間差八個小時 (480 分鐘), 因此要在 8 個小時前發表
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime((datetime.datetime.now()- \
+datetime.timedelta(minutes=480)).strftime('%Y-%m-%d %H:%M'),"%Y-%m-%d %H:%M"))
+#categories = ["Uncategorized"]
+#tags = ["python", "測試"]
+categories = [category_str.split(":")[1]]
+tags = [tags_str.split(":")[1]]
+data = {'title': title, 'description': content, 'dateCreated': date_created, 'categories': categories, 'mt_keywords': tags}
+ 
+post_id = server.metaWeblog.newPost(wp_blogid, wp_username, wp_password, data, status_published)
+# 利用最後的 child 節點來儲存 post_id
+to_save_post_id = p.insertAsLastChild()    
+to_save_post_id.b = post_id
+to_save_post_id.h = "文章 id"
+# 因為新增節點, commander 必須 redraw
+c.redraw() 
+
+g.es("post_id 為", post_id)
+g.es("已經送出資料!")
+'''
+其他 metaWeblog 的用法:
+metaWeblog.newPost (blogid, username, password, struct, publish) returns string(postid)
+metaWeblog.editPost (postid, username, password, struct, publish) returns true
+metaWeblog.getPost (postid, username, password) returns struct(blog content)
+'''</t>
+<t tx="amd.20150318155833.50">category:Uncategorized
+tags:python, 測試
+這是第1週的摘要內容
+[python]
+for i in range(5):
+    可以 = 5
+    print (i,":",可以)
+[/python]
+這個程式的真正用途說明
+這筆資料從 Leo Editor 送出.
+這是更新的資料, 沒有錯</t>
+<t tx="amd.20150318155833.51">'''在目前所選節點位置, 為 p, 執行
+insertAsLastChild(), 且隨後宣告其
+標題與內文'''
+child = p.insertAsLastChild()    
+child.b = "我的內文"
+child.h = "我的標題"
+'''將目前所選節點位置中, 取最後一個 Child, 然後對應給 added 變數
+這樣就可以取得 added 的標題與內文'''
+added = p.getLastChild()
+g.es("標題:"+added.h+"內文:"+added.b)
+
+c.redraw() </t>
+<t tx="amd.20150319203708.45">http://leo-editor.readthedocs.org/en/latest/leo.core.html?highlight=insertaslastchild#leo.core.leoNodes.Position.insertAsLastChild</t>
+<t tx="amd.20150319203708.48">@language python
+#coding: utf-8
+import xmlrpc.client
+import datetime
+import os
+
+def get_cat_tag_content(data):
+    data_list = data.split("\n")
+    # 只有一項資料的 category 型別為字串
+    category = data_list[0]
+    # 只有一項資料的 tags 型別為字串
+    tags = data_list[1]
+    # 有多項資料的 content 型別為數列
+    # 再將第3行之後的資料數列串回成以跳行隔開的資料
+    content = "\n".join(data_list[2:])
+    return category, tags, content
+    
+os.environ['TZ'] = 'Asia/Taipei'
+ 
+#################################
+# Open a file
+fo = open(p.parent().b, "r+")
+data = []
+for line in fo.readlines():
+    data.append(line)
+    #print(line)
+#print(data[0])
+ 
+# Close opend file
+fo.close()
+
+# 從網誌節點的 parent().h 取得 wp_url
+# 從網誌節點的 parent().b 取得帳號與密碼對應的文字檔案路徑
+wp_url = "https://"+p.parent().h+"/xmlrpc.php"
+wp_username = data[0]
+wp_password = data[1]
+#################################
+wp_blogid = "0"
+ 
+status_draft = 0
+status_published = 1
+ 
+server = xmlrpc.client.ServerProxy(wp_url)
+ 
+title = p.h
+#content = p.b
+category_str, tags_str, content = get_cat_tag_content(p.b)
+# 指定時間出版
+'''
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime("2013-01-01 00:00",
+"%Y-%m-%d %H:%M"))
+'''
+# 以現在時間出版, 考慮與 Server 時間差八個小時 (480 分鐘), 因此要在 8 個小時前發表
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime((datetime.datetime.now()- \
+datetime.timedelta(minutes=480)).strftime('%Y-%m-%d %H:%M'),"%Y-%m-%d %H:%M"))
+#categories = ["Uncategorized"]
+#tags = ["python", "測試"]
+categories = [category_str.split(":")[1]]
+tags = [tags_str.split(":")[1]]
+data = {'title': title, 'description': content, 'dateCreated': date_created, 'categories': categories, 'mt_keywords': tags}
+
+# 設法取得原 post 的 id
+origin_post = p.getLastChild()
+post_id = origin_post.b
+status = server.metaWeblog.editPost(post_id, wp_username, wp_password, data, status_published)
+
+if status:
+    g.es("資料已經更新!")
+else:
+    g.es("有問題, 資料沒有更新!")
+'''
+其他 metaWeblog 的用法:
+metaWeblog.newPost (blogid, username, password, struct, publish) returns string(postid)
+metaWeblog.editPost (postid, username, password, struct, publish) returns true
+metaWeblog.getPost (postid, username, password) returns struct(blog content)
+'''</t>
+<t tx="amd.20150319203708.49">category:Uncategorized
+tags:python, 測試
+在第2週, 除了利用 OpenShift 安裝 Wordpress 4 之外, 還學習如何
+&lt;!--more--&gt;
+讓同組學員成為 author.</t>
+<t tx="amd.20150320090250.40"># 改為讀檔案取得網誌連結, 帳號與密碼
+# Open a file
+fo = open("foo.txt", "r+")
+'''
+foo.txt 內容
+ 
+https://網誌網址/xmlrpc.php
+ 
+帳號
+密碼
+'''
+data = []
+for line in fo.readlines():
+    data.append(line)
+    #print(line)
+#print(data[0])
+ 
+# Close opend file
+fo.close()
+ 
+wp_url = data[0]
+wp_username = data[1]
+wp_password = data[2]</t>
+<t tx="amd.20150320090250.42">/home/amd/Desktop/demo-2015course.txt</t>
+<t tx="amd.20150320090250.45">首節點標題為 Wordpress site 的 domain name, 程式會加上 https:// 頭與 /xmlrpc.php 尾
+
+首節點對應的 body 內容為儲存發佈訊息的帳號密碼檔案的存放路徑
+
+新增 post 結束後, 程式會在訊息發佈節點的下屬, 新增一個"文章 id" 內文存放該對應內容的 post_id, 當 post 對應節點內容更動後, 就是透過此一 id 執行資料更新
+
+將 new-to-wp 與 edit-to-wp 設為 buttons
+
+記得在 WP 新增一個 author 帳號, 以便與 Leo Editor 中的 buttons 程式配合, 不要使用 site administrator 帳號.</t>
+<t tx="amd.20150320090250.46">/home/amd/Desktop/wordpress-chiamingyen.txt</t>
+<t tx="amd.20150320090250.47">/home/amd/Desktop/wordpress-2015course.txt</t>
+<t tx="amd.20150321081347.40">@language python
+'''
+for p in c.all_positions():
+    # 列出所有節點的 level() 與 h
+    # 第1層 p.level() 為 0, h 為節點標題
+    g.es(p.level(), p.h)
+'''
+'''
+# echo string 時, 利用 angleBrackets 圈住字串
+g.es(g.angleBrackets('abc'))
+# 若節點內容或架構更動, 需要利用 c.redraw() 重新繪製
+c.redraw_now()
+'''
+# 有關 generator
+'''
+A generator is simply a function which returns an object on which you can call next, such that for every call it returns some value, until it raises a StopIteration exception, signaling that all values have been generated. Such an object is called an iterator.
+
+Normal functions return a single value using return, just like in Java. In Python, however, there is an alternative, called yield. Using yield anywhere in a function makes it a generator.
+'''
+# 利用 yield 傳值以便定義 generator 函式
+def myGen(n):
+    yield n
+    yield n + 1
+data = myGen(6)
+g.es(next(data))
+g.es(next(data))
+
+# 若再呼叫 next(data) 就會出錯, 因為 yield 只有兩筆</t>
+<t tx="amd.20150321081347.44">212</t>
+<t tx="amd.20150321081347.45">215</t>
+<t tx="amd.20150321081347.46">category:文章類別
+tags:標籤用逗點隔開
+第3行開始就是文章內容
+
+目前的 categories 有 Leo Editor, Brython 與 Uncategorized</t>
+<t tx="amd.20150321081347.47">category:文章類別
+tags:標籤用逗點隔開
+第3行開始就是文章內容
+
+目前的 categories 有:
+
+2015 協同產品設計實習(教材專用)
+
+2015 網際內容管理(教材專用)
+
+網路文摘
+
+用戶故事
+
+    機械設計工程系
+
+    計算機程式
+
+    設計運算
+
+議題討論
+
+與 Uncategorized</t>
+<t tx="amd.20150321081347.48">category:Leo Editor
+tags:資料管理
+Leo Editor 對於已經熟悉 Python 的使用者來說, 可以是一項如虎添翼的資料管理工具. 這裡我們將利用 Leo Editor 來管理雲端 Wordpress 網誌上的文章.
+
+&lt;!--more--&gt;
+
+&lt;a href="http://leoeditor.com/"&gt;http://leoeditor.com/&lt;/a&gt;
+
+在 Leo Editor 節點中, 用來產生 new-to-wp 按鈕的程式碼:
+[python]
+@language python
+#coding: utf-8
+import xmlrpc.client
+import datetime
+import os
+
+def get_cat_tag_content(data):
+    data_list = data.split("\n")
+    # 只有一項資料的 category 型別為字串
+    category = data_list[0]
+    # 只有一項資料的 tags 型別為字串
+    tags = data_list[1]
+    # 有多項資料的 content 型別為數列
+    # 再將第3行之後的資料數列串回成以跳行隔開的資料
+    content = "\n".join(data_list[2:])
+    return category, tags, content
+    
+os.environ['TZ'] = 'Asia/Taipei'
+
+#################################
+# Open a file
+fo = open(p.parent().b, "r+")
+data = []
+for line in fo.readlines():
+    data.append(line)
+    #print(line)
+#print(data[0])
+ 
+# Close opend file
+fo.close()
+ 
+# 從網誌節點的 parent().h 取得 wp_url
+# 從網誌節點的 parent().b 取得帳號與密碼對應的文字檔案路徑
+wp_url = "https://"+p.parent().h+"/xmlrpc.php"
+wp_username = data[0]
+wp_password = data[1]
+#################################
+wp_blogid = "0"
+ 
+status_draft = 0
+status_published = 1
+ 
+server = xmlrpc.client.ServerProxy(wp_url)
+ 
+title = p.h
+#content = p.b
+category_str, tags_str, content = get_cat_tag_content(p.b)
+# 指定時間出版
+'''
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime("2013-01-01 00:00",
+"%Y-%m-%d %H:%M"))
+'''
+# 以現在時間出版, 考慮與 Server 時間差八個小時 (480 分鐘), 因此要在 8 個小時前發表
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime((datetime.datetime.now()- \
+datetime.timedelta(minutes=480)).strftime('%Y-%m-%d %H:%M'),"%Y-%m-%d %H:%M"))
+#categories = ["Uncategorized"]
+#tags = ["python", "測試"]
+categories = [category_str.split(":")[1]]
+tags = [tags_str.split(":")[1]]
+data = {'title': title, 'description': content, 'dateCreated': date_created, 'categories': categories, 'mt_keywords': tags}
+ 
+post_id = server.metaWeblog.newPost(wp_blogid, wp_username, wp_password, data, status_published)
+# 利用最後的 child 節點來儲存 post_id
+to_save_post_id = p.insertAsLastChild()    
+to_save_post_id.b = post_id
+to_save_post_id.h = "文章 id"
+# 因為新增節點, commander 必須 redraw
+c.redraw() 
+
+g.es("post_id 為", post_id)
+g.es("已經送出資料!")
+'''
+其他 metaWeblog 的用法:
+metaWeblog.newPost (blogid, username, password, struct, publish) returns string(postid)
+metaWeblog.editPost (postid, username, password, struct, publish) returns true
+metaWeblog.getPost (postid, username, password) returns struct(blog content)
+'''
+[/python]
+用來產生 edit-to-wp 按鈕的程式碼:
+[python]
+@language python
+#coding: utf-8
+import xmlrpc.client
+import datetime
+import os
+
+def get_cat_tag_content(data):
+    data_list = data.split("\n")
+    # 只有一項資料的 category 型別為字串
+    category = data_list[0]
+    # 只有一項資料的 tags 型別為字串
+    tags = data_list[1]
+    # 有多項資料的 content 型別為數列
+    # 再將第3行之後的資料數列串回成以跳行隔開的資料
+    content = "\n".join(data_list[2:])
+    return category, tags, content
+    
+os.environ['TZ'] = 'Asia/Taipei'
+ 
+#################################
+# Open a file
+fo = open(p.parent().b, "r+")
+data = []
+for line in fo.readlines():
+    data.append(line)
+    #print(line)
+#print(data[0])
+ 
+# Close opend file
+fo.close()
+
+# 從網誌節點的 parent().h 取得 wp_url
+# 從網誌節點的 parent().b 取得帳號與密碼對應的文字檔案路徑
+wp_url = "https://"+p.parent().h+"/xmlrpc.php"
+wp_username = data[0]
+wp_password = data[1]
+#################################
+wp_blogid = "0"
+ 
+status_draft = 0
+status_published = 1
+ 
+server = xmlrpc.client.ServerProxy(wp_url)
+ 
+title = p.h
+#content = p.b
+category_str, tags_str, content = get_cat_tag_content(p.b)
+# 指定時間出版
+'''
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime("2013-01-01 00:00",
+"%Y-%m-%d %H:%M"))
+'''
+# 以現在時間出版, 考慮與 Server 時間差八個小時 (480 分鐘), 因此要在 8 個小時前發表
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime((datetime.datetime.now()- \
+datetime.timedelta(minutes=480)).strftime('%Y-%m-%d %H:%M'),"%Y-%m-%d %H:%M"))
+#categories = ["Uncategorized"]
+#tags = ["python", "測試"]
+categories = [category_str.split(":")[1]]
+tags = [tags_str.split(":")[1]]
+data = {'title': title, 'description': content, 'dateCreated': date_created, 'categories': categories, 'mt_keywords': tags}
+
+# 設法取得原 post 的 id
+origin_post = p.getLastChild()
+post_id = origin_post.b
+status = server.metaWeblog.editPost(post_id, wp_username, wp_password, data, status_published)
+
+if status:
+    g.es("資料已經更新!")
+else:
+    g.es("有問題, 資料沒有更新!")
+'''
+其他 metaWeblog 的用法:
+metaWeblog.newPost (blogid, username, password, struct, publish) returns string(postid)
+metaWeblog.editPost (postid, username, password, struct, publish) returns true
+metaWeblog.getPost (postid, username, password) returns struct(blog content)
+'''
+[/python]
+
+基本規劃如下:
+    建立一個節點, 標題為 Wordpress 網誌的網址, 例如: wordpress-chiamingyen.rhcloud.com
+    而此節點的內容則為發佈網誌者的帳號與密碼所在的檔案位置, 例如: /home/amd/Desktop/wordpress-chiamingyen.txt
+    而此 wordpress-chiamingyen.txt 檔案內容, 共有兩行, 第1行為發佈者的帳號, 而第2行則為密碼.
+    
+而在 Leo Editor Wordpress 網誌節點下屬, 則為所要發佈的網誌內容節點, 標題為網誌主題, 而內容格式則為:
+    category:文章類別
+    tags:標籤用逗點隔開
+    第3行開始就是文章內容
+    
+而發佈資料時, 只要滑鼠選擇已經寫好的網誌內容節點標題, 然後按下 new-to-wp, 程式就會自動讀取所需的發佈者帳號與密碼, 並且解析文章內容中的第1行與第2行, 取得所要發佈的類別與標籤, 且確定發佈內容後, 就會將資料送到對應的網誌, 然後在子節點記下登記的 post_id, 隨後若需要編輯修改此一網誌內容, 將會依賴此一 post_id 更新資料.
+
+當某一網誌內容發佈後, 若內容需要更新, 則同樣選擇更新後的網誌節點, 然後按下 edit-to-wp 按鈕就可以完成更新.</t>
+<t tx="amd.20150321081347.49">4</t>
+</tnodes>
+</leo_file>
