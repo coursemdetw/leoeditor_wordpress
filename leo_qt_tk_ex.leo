@@ -32,6 +32,12 @@
 </v>
 <v t="amd.20150320090250.47" a="E"><vh>wordpress-2015course.rhcloud.com</vh>
 <v t="amd.20150321081347.47"><vh>寫網誌的格式</vh></v>
+<v t="amd.20150322185151.11" a="E"><vh>Easy Wordpress Guide 重點</vh>
+<v t="amd.20150322185151.12"><vh>文章 id</vh></v>
+</v>
+<v t="amd.20150322185151.13" a="E"><vh>Scrum in Mechanical Product Development</vh>
+<v t="amd.20150322185151.14"><vh>文章 id</vh></v>
+</v>
 </v>
 <v t="amd.20150320090250.46" a="E"><vh>wordpress-chiamingyen.rhcloud.com</vh>
 <v t="amd.20150321081347.46"><vh>寫網誌的格式</vh></v>
@@ -1095,7 +1101,8 @@ datetime.timedelta(minutes=480)).strftime('%Y-%m-%d %H:%M'),"%Y-%m-%d %H:%M"))
 #categories = ["Uncategorized"]
 #tags = ["python", "測試"]
 categories = [category_str.split(":")[1]]
-tags = [tags_str.split(":")[1]]
+# 請注意, 因為 tags 用逗點隔開, 因此必須透過 split() 再分開成為 list 資料
+tags = tags_str.split(":")[1].split(",")
 data = {'title': title, 'description': content, 'dateCreated': date_created, 'categories': categories, 'mt_keywords': tags}
  
 post_id = server.metaWeblog.newPost(wp_blogid, wp_username, wp_password, data, status_published)
@@ -1196,7 +1203,8 @@ datetime.timedelta(minutes=480)).strftime('%Y-%m-%d %H:%M'),"%Y-%m-%d %H:%M"))
 #categories = ["Uncategorized"]
 #tags = ["python", "測試"]
 categories = [category_str.split(":")[1]]
-tags = [tags_str.split(":")[1]]
+# 請注意, 因為 tags 用逗點隔開, 因此必須透過 split() 再分開成為 list 資料
+tags = tags_str.split(":")[1].split(",")
 data = {'title': title, 'description': content, 'dateCreated': date_created, 'categories': categories, 'mt_keywords': tags}
 
 # 設法取得原 post 的 id
@@ -1494,5 +1502,108 @@ metaWeblog.getPost (postid, username, password) returns struct(blog content)
 
 當某一網誌內容發佈後, 若內容需要更新, 則同樣選擇更新後的網誌節點, 然後按下 edit-to-wp 按鈕就可以完成更新.</t>
 <t tx="amd.20150321081347.49">4</t>
+<t tx="amd.20150322185151.11">category:2015 網際內容管理(教材專用)
+tags:課前準備, EasyWPGuide
+
+Welcome:
+
+My aim is to create a simple WordPress guide that will help you to get an overall understanding of how you use the various features within the WordPress Dashboard to keep your site or blog updated.
+
+若想要獲得更深入的資料: &lt;a href="http://codex.wordpress.org/Main_Page"&gt;http://codex.wordpress.org/Main_Page&lt;/a&gt;
+
+&lt;!--more--&gt;
+
+Introduction:
+
+WordPress is an Open Source software system used by millions of people around the world to create beautiful websites and blogs. It is completely customisable by the use of themes and plugins.
+
+WordPress powers a staggering (so surprisingly impressive as to stun or overwhelm) amount of websites. In fact, it powers over 23% of the whole web! Everything from personal blogs to large corporate websites.
+
+Before you can make any changes to your site, you will need to log in. The login for your site is typically found at the following URL - http://your-wordpress-site.com/wp-admin.
+
+Once you’ve logged in, the WordPress Dashboard appears. This is your main administration homepage.
+
+The Screen Options link will display various options that allow you to configure what is displayed on the current page.
+
+WordPress is built around two basic concepts. Posts and Pages. Posts are typically blog entries. A series of articles, listed (usually) reverse-chronologically. Pages are used for more static content (i.e. content that doesn’t change or changes infrequently). An ‘About us’ page is an example of a Page on a typical website. In
+most cases you’ll find that the content in the ‘About us’ page doesn’t change all that frequently.
+
+Posts allow you to associate Categories and Tags whereas Pages don’t. What’s the difference between categories and tags? Normally, Tags are ad-hoc keywords that identify important information in your Post (names, subjects, etc) that may or may not recur in other Posts, while Categories are pre-determined sections. If you think of your site like a book, the Categories are like the Table of Contents and the Tags are like the terms in the index.
+
+A Post Format is meta information that can be used within a Theme to style or customise the presentation of a Post. The Post Formats feature provides a standardised list of formats that are available to all themes that support the feature. There is no requirement for Themes to support every format on the list and new formats cannot be introduced by themes or even plugins. If your Theme supports Post Formats you can choose how each Post looks by selecting a Post Format from a list of radio buttons, similar to the following screen. If your Theme doesn’t support Post Formats then the Format panel won’t be displayed.
+
+Widgets are independent sections of content that can be placed into any widgetized area provided by your theme. Although these widgetized areas are commonly called ‘Sidebars’ and are quite often located in the left or right-hand column, they can be also located anywhere within your site and are entirely dependent on the current theme as to their location. Lots of themes use these widgetized sidebars in the footer area.
+
+Plugins extend and expand the functionality of WordPress. Once a plugin is installed, you may activate it or deactivate it here.
+
+Users with roles other than Administrator will see fewer options when they are logged in. Depending on your
+Role, you can also add new users as well as manage their Roles.
+
+• Administrator – Somebody who has access to all the administration features
+• Editor – Somebody who can publish and manage posts and pages as well as
+manage other users' posts, etc.
+• Author – Somebody who can publish and manage their own posts
+• Contributor – Somebody who can write and manage their posts but not
+publish them
+• Subscriber – Somebody who can only manage their profile
+
+中文支援論壇: &lt;a href="http://tw.forums.wordpress.org/"&gt;http://tw.forums.wordpress.org/&lt;/a&gt;</t>
+<t tx="amd.20150322185151.12">627</t>
+<t tx="amd.20150322185151.13">category:2015 協同產品設計實習(教材專用)
+tags:課前準備, Scrum, 機械設計
+Abstract
+
+The purpose of this study was to investigate if it would be possible for a mechanical product development team to use Scrum, an Agile Development framework.
+
+The results indicate that it is possible for a mechanical development team to use the Scrum framework, with some minor adaptions of the framework. The team in the primary case made use of all main aspects of the framework, but the deviations were that the team was not cross-functional and a working product or product increment is not produced every iteration. The results also indicate that using the framework improved the team’s work and progress, and the team decided to continue using the framework after the experiment.
+
+&lt;!--more--&gt;
+
+Introduction
+
+New product development is a complex endeavour, which can often be difficult to handle and challenging to see in advance what the end result will be. There is great uncertainty and unexpected things happen along the way, which affects the scope and direction of a product development project. Therefore these projects can often be difficult to plan, and plans become obsolete soon after their creation.
+
+Agile Software Development became a collective term for the new methods, which are all based on iterative and incremental development of self-organizing cross-functional teams, rapidly responding to change.
+
+Estimates are shared in Agile teams; they are not made by a single individual on the team, or a single expert. As the whole team will do the work, all team members make the estimates.
+
+Work items are often called a User Story or a Story, and the estimates used to express an overall story’s size are often called Story Points.
+
+Scrum is not a process or a technique for building products; rather, it is a framework within which you can employ various processes and techniques. Scrum makes clear the relative efficacy of your product management and development practices so that you can improve.
+
+Scrum is founded on empirical process control theory, or empiricism. Empiricism asserts that knowledge comes from experience and making decisions based on what is known. Scrum employs an iterative, incremental approach to optimize predictability and control risk.
+
+There are three roles in Scrum, the Project Owner, the Scrum Master and the Team. Together these three roles form the Scrum Team. The Product Owner is the person that is financially responsible of the product. That person prioritizes items according to the needs of the product and the stakeholders. The Scrum Master is a person with experience in Scrum and he or she supports the Product Owner and the Team in complying with the Scrum rules. The Scrum Master also protects the team from external interruption, in order for the team to be focused on their work. The Team is a group of approximately seven people that executes the prioritized tasks and develops the final product.
+
+The development work is performed in cycles called Sprints. Each Sprint can be from 1 to 4 weeks long, and are iterated without a pause. At the start of a Sprint the team commits to what work items they will complete by the end of the upcoming Sprint. The team chooses from a list of items, called the Product Backlog that has been prioritized by the Product Owner. This prioritization is based on input from all stakeholders of the product. When a Sprint has started, no changes can be made to the committed task list, nor can the Sprint be elongated. The Sprint will finish on a set date whether or not the Team has completed what it had committed to.
+
+During a Sprint a 15-minute Daily Meetings are held. This is a way for the team members to communicate to each other what their status is. Each team member communicates the following; what they have done since the last meeting, what they are going to do now, and if there are any impediments in their way. This allows other members to offer their help, but further discussions about the details will continue after the Daily Meeting. All other technical or more detailed discussion can be taken up after the meeting.
+
+An important part of Scrum is “inspect and adapt”. At the end of a Sprint, a Sprint Review is held that focuses on the product. One part of the Review is a demonstration of the finished product part to all stakeholders. However, the main purpose of the Review is an in depth conversation about the product between the Team members and the Product Owner, on the status as well as getting advice. Another meeting is held at the end of a Sprint, called Retrospective meeting. This meeting focuses on the inspecting and adapting the process and is facilitated by the Scrum Master. There the Team can identify how the process can be improved.
+
+Adaptations to the Framework
+
+When asked what adaptations mechanical teams might need to make in order to use the framework the SM listed the following items:
+
+•Variable Sprint lengths might be needed in order to accommodate for e.g. field test.
+•That User Stories are not used. It might not be possible to base definition of stories or work tasks might on the user experience.
+
+She stated that otherwise, the teams should be able to use the other elements of the framework, such as Daily stand-ups, have a backlog, and do planning and tasking stories as well as use relative estimating. She noted that the mechanical team had been sceptic about relative estimating and Planning Poker but that it worked well for them and they were using it. The SM stated that relative estimating is very helpful and the benefit is that it is so quick, and afterwards it is possible to easily calculate the cost of each point.
+
+Advantages
+
+The team was asked to name three or more advantages of the new work system. The answers were grouped into the following categories:
+
+• Daily Stand-up: Three team members noted that the Daily meetings were an advantage, and noted that the meetings create discussions and the problems become clearer as they are discussed daily.
+• Functional breakdown: One team member mentioned work breakdown as positive, and was most likely referring to the breakdown that was done at the Release Planning meeting, where the machines was broken down into sub-systems and components.
+• Overview and clarity: Three team members mentioned that the work system gives a clearer overview of the project and its status.
+• Plan: One team member mentioned that it was positive that there was some kind of a plan.
+• Communication and Co-operation: Three team member noted positive elements in regards to communication and co-operation. It was mentioned that now the team is a whole, single entity and everyone has a chance to give feedback on tasks that others are working on. The work system supports knowledge transfer and creates a forum for discussions.
+•Focus: One team member mentioned that the system has provided focus for the team, as other projects are dismissed to keep the team focused.
+
+參考資料: &lt;a href="http://publications.lib.chalmers.se/records/fulltext/191951/191951.pdf"&gt;http://publications.lib.chalmers.se/records/fulltext/191951/191951.pdf&lt;/a&gt;
+
+</t>
+<t tx="amd.20150322185151.14">630</t>
 </tnodes>
 </leo_file>
