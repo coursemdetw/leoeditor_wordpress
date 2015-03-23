@@ -1551,6 +1551,8 @@ publish them
 <t tx="amd.20150322185151.12">627</t>
 <t tx="amd.20150322185151.13">category:2015 協同產品設計實習(教材專用)
 tags:課前準備, Scrum, 機械設計
+先消化這一份資料: &lt;a href="http://www.delightpress.com.tw/bookRead/skna00001_read.pdf"&gt;Scrum 是很有內涵的&lt;/a&gt;
+
 Abstract
 
 The purpose of this study was to investigate if it would be possible for a mechanical product development team to use Scrum, an Agile Development framework.
@@ -1601,7 +1603,16 @@ The team was asked to name three or more advantages of the new work system. The 
 • Communication and Co-operation: Three team member noted positive elements in regards to communication and co-operation. It was mentioned that now the team is a whole, single entity and everyone has a chance to give feedback on tasks that others are working on. The work system supports knowledge transfer and creates a forum for discussions.
 •Focus: One team member mentioned that the system has provided focus for the team, as other projects are dismissed to keep the team focused.
 
-參考資料: &lt;a href="http://publications.lib.chalmers.se/records/fulltext/191951/191951.pdf"&gt;http://publications.lib.chalmers.se/records/fulltext/191951/191951.pdf&lt;/a&gt;
+參考資料: 
+&lt;a href="http://www.slideshare.net/teddysoft/10published?qid=f3dd0949-54ed-4215-8451-25381fbba533"&gt;軟體開法成功秘訣&lt;/a&gt;
+&lt;a href="http://www.slideshare.net/teddysoft/pub-43056568?qid=f3dd0949-54ed-4215-8451-25381fbba533"&gt;敏捷開發精神介紹&lt;/a&gt;
+&lt;a href="http://www.slideshare.net/teddysoft/pattern-design-patterns-20published?qid=f3dd0949-54ed-4215-8451-25381fbba533"&gt;那一夜我們說 Pattern&lt;/a&gt;
+&lt;a href="http://www.slideshare.net/teddysoft/design-pattern-day1201307published?qid=f3dd0949-54ed-4215-8451-25381fbba533"&gt;Design Pattern 第1堂課&lt;/a&gt;
+&lt;a href="http://www.slideshare.net/teddysoft/ss-35192183?qid=f3dd0949-54ed-4215-8451-25381fbba533"&gt;Scrum 導入經驗分享&lt;/a&gt;
+&lt;a href="http://www.slideshare.net/teddysoft/30-14340071?qid=f3dd0949-54ed-4215-8451-25381fbba533"&gt;Pattern 入門&lt;/a&gt;
+&lt;a href="http://www.slideshare.net/ZongYingLyu/scrum-41408111?qid=f3dd0949-54ed-4215-8451-25381fbba533"&gt;Scrum!&lt;/a&gt;
+&lt;a href="http://publications.lib.chalmers.se/records/fulltext/191951/191951.pdf"&gt;Scrum in Mechanical Product Development(論文)&lt;/a&gt;
+&lt;a href="http://www.books.com.tw/products/0010549884"&gt;陳建村-笑談軟體工程：敏捷開發法的逆襲&lt;/a&gt;
 
 </t>
 <t tx="amd.20150322185151.14">630</t>
