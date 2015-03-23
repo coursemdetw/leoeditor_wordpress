@@ -22,6 +22,7 @@
 <v t="amd.20150319203708.48"><vh>@button edit to wp</vh></v>
 <v t="amd.20150319203708.45"><vh>Leo Editor API</vh></v>
 <v t="amd.20150320090250.45" a="E"><vh>利用 Leo Editor 作為 Wordpress client</vh>
+<v t="amd.20150323191758.5"><vh>已知問題</vh></v>
 <v t="amd.20150320090250.42" a="E"><vh>demo-2015course.rhcloud.com</vh>
 <v t="amd.20150318155833.50" a="E"><vh>這是第1週的心得</vh>
 <v t="amd.20150321081347.44"><vh>文章 id</vh></v>
@@ -31,7 +32,11 @@
 </v>
 </v>
 <v t="amd.20150320090250.47" a="E"><vh>wordpress-2015course.rhcloud.com</vh>
+<v t="amd.20150323191758.7"><vh>Scrum 團隊資料</vh></v>
 <v t="amd.20150321081347.47"><vh>寫網誌的格式</vh></v>
+<v t="amd.20150323191758.4"><vh>協同專案執行範例</vh>
+<v t="amd.20150323191758.6"><vh>文章 id</vh></v>
+</v>
 <v t="amd.20150322185151.11" a="E"><vh>Easy Wordpress Guide 重點</vh>
 <v t="amd.20150322185151.12"><vh>文章 id</vh></v>
 </v>
@@ -1259,7 +1264,9 @@ wp_password = data[2]</t>
 
 將 new-to-wp 與 edit-to-wp 設為 buttons
 
-記得在 WP 新增一個 author 帳號, 以便與 Leo Editor 中的 buttons 程式配合, 不要使用 site administrator 帳號.</t>
+記得在 WP 新增一個 author 帳號, 以便與 Leo Editor 中的 buttons 程式配合, 不要使用 site administrator 帳號.
+
+為了配合網誌更新流程中, 使用者在瀏覽器中更新既有的網誌文章, 然後再透過 Leo Editor 對應專案進行改版, 此時使用者必須先從網誌取下特定文章的內容之後, 才能根據最新文章加以改版. 換言之, 這裡需要一個 update-from-wp 透過"文章 id" 取下文章的最新內容, 而非使用 Leo Editor 中的舊內容進行改版.</t>
 <t tx="amd.20150320090250.46">/home/amd/Desktop/wordpress-chiamingyen.txt</t>
 <t tx="amd.20150320090250.47">/home/amd/Desktop/wordpress-2015course.txt</t>
 <t tx="amd.20150321081347.40">@language python
@@ -1616,5 +1623,100 @@ The team was asked to name three or more advantages of the new work system. The 
 
 </t>
 <t tx="amd.20150322185151.14">630</t>
+<t tx="amd.20150323191758.4">category:2015 協同產品設計實習(教材專用)
+tags:課前準備, Scrum, 機械設計
+這是一個包含 scrumaster, product-owner, scrum-1, scrum-2, scrum-3, scrum-4 等六位組員的協同產品開發團隊, 目前希望能夠在 4/8 之前完成專案一.
+
+&lt;!--more--&gt;
+
+專案一:
+
+正齒輪減速機零件設計繪圖服務系統：
+
+使用者利用瀏覽器連結至各組的 2D 正齒輪繪圖系統, 系統提供齒數, 模數與壓力角等3個欄位, 使用者根據使用說明, 填入所需設計參數後送出表單, 系統繪出符合規格之 2D 正齒輪輪廓圖.
+
+使用者利用瀏覽器連結至各組的 3D 正齒輪繪圖系統, 系統提供齒數, 模數與壓力角等3個欄位, 使用者根據使用說明, 準備好近端的 Creo 系統環境後, 填入所需設計參數後送出表單, 系統繪出符合規格之 3D 正齒輪零件, 並將零件檔案存入近端目錄中.
+
+&lt;hr&gt;
+
+以下開始本組的專案一執行.
+
+stories:
+
+故事一: 需要有組員交換意見的平台
+
+提供一個讓各組員可以回報執行進度, 可以線上開會,  可以針對開會主題進行意見交換或討論的平台或機制.
+
+故事二: 協同過程中,  各組員可以同步或非同步彙整所完成的資料
+
+當組員可以直接在線上開會, 交付報告後, 能夠有一個機制或方法, 可以讓各組員將所完成的資料或程式進行版次管理, 不僅可以完成保留各組員各階段所完成的所有資料, 而且這些資料能夠與最終的 pdf 報告或 html 格式報告, 或者雲端網站資料整合在一起.
+
+故事三: 完成 2D 正齒輪繪圖系統
+
+使用者利用瀏覽器連結至各組的 2D 正齒輪繪圖系統, 系統提供齒數, 模數與壓力角等3個欄位, 使用者根據使用說明, 填入所需設計參數後送出表單, 系統繪出符合規格之 2D 正齒輪輪廓圖.
+
+故事四: 完成 3D 正齒輪繪圖系統
+
+使用者利用瀏覽器連結至各組的 3D 正齒輪繪圖系統, 系統提供齒數, 模數與壓力角等3個欄位, 使用者根據使用說明, 準備好近端的 Creo 系統環境後, 填入所需設計參數後送出表單, 系統繪出符合規格之 3D 正齒輪零件, 並將零件檔案存入近端目錄中.
+
+接下來, 本組將針對上述四個故事, 提出工作清單, 預估完成所需時間, 任務分配表, 以及定義所要交付的成果等.
+
+配合上述規劃分別完成下列設定:
+
+Wordperss 網誌: &lt;a href="https://wordpress-productownermde.rhcloud.com"&gt;https://wordpress-productownermde.rhcloud.com&lt;/a&gt;
+
+Github 倉儲: &lt;a href="https://github.com/product-owner/2015scrum"&gt;https://github.com/product-owner/2015scrum&lt;/a&gt;
+
+與 2015scrum 倉儲對應的專案管理系統: &lt;a href="https://waffle.io/product-owner/2015scrum"&gt;https://waffle.io/product-owner/2015scrum&lt;/a&gt;
+
+Gitbook 電子書閱讀: &lt;a href="http://product_owner.gitbooks.io/2015scrumproject/content"&gt;http://product_owner.gitbooks.io/2015scrumproject/content&lt;/a&gt;</t>
+<t tx="amd.20150323191758.5">使用 Windows 進行"new-to-wp" button 新增資料時, 會出現資料編碼上的問題.
+
+可能原因:
+
+read 或 write 時沒有宣告資料的 encoding.
+
+處理與測試:</t>
+<t tx="amd.20150323191758.6">665</t>
+<t tx="amd.20150323191758.7">Product Owner:
+
+    product_owner@mde.tw
+    
+    sign up OpenShift account and create https://wordpress-productownermde.rhcloud.com
+    
+    on Github as product-owner and create https://github.com/product-owner/2015scrum
+    
+    2015scrum repository is synchronized to https://waffle.io/product-owner/2015scrum
+    
+    sign up Disqus account as product_owner - shortname is 2015scrumproject
+    
+    sign up Gitbook as product_owner create http://product_owner.gitbooks.io/2015scrumproject/content/
+
+Scrum Master:
+
+    scrumaster@mde.tw
+    
+    on Github as scrumaster
+    
+    sign up Gitbook as product_owner and create an ebook: 
+
+
+Developers:
+
+    scrum1@mde.tw
+    
+        on Github as scrum-1
+        
+    scrum2@mde.tw
+    
+        on Github as scrum-2
+    
+    scrum3@mde.tw
+        
+        on Github as scrum-3
+        
+    scrum4@mde.tw
+
+    on Github as scrum-4</t>
 </tnodes>
 </leo_file>
