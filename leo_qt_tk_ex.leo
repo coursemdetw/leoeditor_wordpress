@@ -1268,7 +1268,7 @@ wp_password = data[2]</t>
 
 為了配合網誌更新流程中, 使用者在瀏覽器中更新既有的網誌文章, 然後再透過 Leo Editor 對應專案進行改版, 此時使用者必須先從網誌取下特定文章的內容之後, 才能根據最新文章加以改版. 換言之, 這裡需要一個 update-from-wp 透過"文章 id" 取下文章的最新內容, 而非使用 Leo Editor 中的舊內容進行改版.</t>
 <t tx="amd.20150320090250.46">/home/amd/Desktop/wordpress-chiamingyen.txt</t>
-<t tx="amd.20150320090250.47">v:/wordpress-2015course.txt</t>
+<t tx="amd.20150320090250.47">/home/amd/Desktop/wordpress-2015course.txt</t>
 <t tx="amd.20150321081347.40">@language python
 '''
 for p in c.all_positions():
