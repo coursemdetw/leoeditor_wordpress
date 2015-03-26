@@ -46,6 +46,10 @@
 </v>
 <v t="amd.20150320090250.46" a="E"><vh>wordpress-chiamingyen.rhcloud.com</vh>
 <v t="amd.20150321081347.46"><vh>寫網誌的格式</vh></v>
+<v t="amd.20150326092950.3"><vh>@url 連結網誌</vh></v>
+<v t="amd.20150326093802.57"><vh>使用 Docker 執行 Taiga</vh>
+<v t="amd.20150326120643.3"><vh>文章 id</vh></v>
+</v>
 <v t="amd.20150321081347.48" a="E"><vh>Leo Editor 再出發</vh>
 <v t="amd.20150321081347.49"><vh>文章 id</vh></v>
 </v>
@@ -1303,7 +1307,7 @@ g.es(next(data))
 tags:標籤用逗點隔開
 第3行開始就是文章內容
 
-目前的 categories 有 Leo Editor, Brython 與 Uncategorized</t>
+目前的 categories 有 Leo Editor, Brython, Docker 與 Uncategorized</t>
 <t tx="amd.20150321081347.47">category:文章類別
 tags:標籤用逗點隔開
 第3行開始就是文章內容
@@ -1718,5 +1722,44 @@ Developers:
     scrum4@mde.tw
 
     on Github as scrum-4</t>
+<t tx="amd.20150326092950.3">http://wordpress-chiamingyen.rhcloud.com
+
+使用 @url 的方法為:
+
+左手按住 ctrl, 右手滑鼠選擇 @url node 標題, 然後點擊右鍵</t>
+<t tx="amd.20150326093802.57">category:Docker
+tags:虛擬技術
+&lt;a href="http://segmentfault.com/a/1190000000366923"&gt;Docker 簡介&lt;/a&gt;
+
+2014.06 起 &lt;a href="http://www.codedata.com.tw/social-coding/docker-layman-abc/"&gt;http://www.codedata.com.tw/social-coding/docker-layman-abc/&lt;/a&gt; 受到關注, 至今已經是業界一致推崇的虛擬技術.
+
+Docker 電子書: &lt;a href="http://yeasy.gitbooks.io/docker_practice/content/"&gt;http://yeasy.gitbooks.io/docker_practice/content/&lt;/a&gt;
+
+首先是透過 &lt;a href="https://docs.docker.com/installation/ubuntulinux/"&gt;https://docs.docker.com/installation/ubuntulinux/&lt;/a&gt; 安裝 Docker.
+
+&lt;!--more--&gt;
+
+在 14.04 LTS 安裝:
+
+sudo wget -qO- https://get.docker.com/ | sh
+
+安裝結束後重新啟動.
+
+利用 &lt;a href="https://github.com/ipedrazas/taiga-docker"&gt;https://github.com/ipedrazas/taiga-docker&lt;/a&gt; 中的 setup.py 與 run-taiga.sh 進行安裝與啟動.
+
+完成後, 就可以利用瀏覽器 localhost:8000, 以 admin/123123 帳號密碼登入了.
+
+參考:
+
+&lt;a href="https://github.com/jwilder/nginx-proxy"&gt;https://github.com/jwilder/nginx-proxy&lt;/a&gt;
+
+&lt;a href="https://github.com/ianmiell/shutit"&gt;https://github.com/ianmiell/shutit&lt;/a&gt;
+
+&lt;a href="https://zwischenzugs.wordpress.com/2014/10/07/using-shutit-to-build-your-own-taiga-server/"&gt;https://zwischenzugs.wordpress.com/2014/10/07/using-shutit-to-build-your-own-taiga-server/&lt;/a&gt;
+
+&lt;a href=http://dockerpool.com/"&gt;http://dockerpool.com/&lt;/a&gt;
+
+</t>
+<t tx="amd.20150326120643.3">10</t>
 </tnodes>
 </leo_file>
