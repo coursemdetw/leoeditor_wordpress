@@ -32,15 +32,22 @@
 </v>
 </v>
 <v t="amd.20150320090250.47" a="E"><vh>wordpress-2015course.rhcloud.com</vh>
+<v t="amd.20150329082932.4"><vh>@url WCM 網站</vh></v>
 <v t="amd.20150323191758.7"><vh>Scrum 團隊資料</vh></v>
 <v t="amd.20150321081347.47"><vh>寫網誌的格式</vh></v>
-<v t="amd.20150323191758.4" a="E"><vh>協同專案執行範例</vh>
+<v t="amd.20150329082932.7"><vh>看板與 Scrum</vh>
+<v t="amd.20150329082932.8"><vh>文章 id</vh></v>
+</v>
+<v t="amd.20150329082932.3"><vh>Wordpress 寄信設定</vh>
+<v t="amd.20150329082932.5"><vh>文章 id</vh></v>
+</v>
+<v t="amd.20150323191758.4"><vh>協同專案執行範例</vh>
 <v t="amd.20150323191758.6"><vh>文章 id</vh></v>
 </v>
-<v t="amd.20150322185151.11" a="E"><vh>Easy Wordpress Guide 重點</vh>
+<v t="amd.20150322185151.11"><vh>Easy Wordpress Guide 重點</vh>
 <v t="amd.20150322185151.12"><vh>文章 id</vh></v>
 </v>
-<v t="amd.20150322185151.13" a="E"><vh>Scrum in Mechanical Product Development</vh>
+<v t="amd.20150322185151.13"><vh>Scrum in Mechanical Product Development</vh>
 <v t="amd.20150322185151.14"><vh>文章 id</vh></v>
 </v>
 </v>
@@ -1761,5 +1768,39 @@ sudo wget -qO- https://get.docker.com/ | sh
 
 </t>
 <t tx="amd.20150326120643.3">10</t>
+<t tx="amd.20150329082932.3">category:2015 網際內容管理(教材專用)
+tags:課前準備, WP 設定
+在 OpenShift 平台上建立的 Wordpress 網站寄信設定:
+
+1. 安裝 WP Mail SMTP plugin
+
+2. 啟用 WP Mail SMTP 後, 透過 Settings-&gt;Email 表單進行設定
+
+3. Mailer 選擇: Send all WordPress emails via SMTP.
+
+4. SMTP Host 欄位填入 smtp.gmail.com
+
+5. SMTP Port 欄位填入 465
+
+6. Encryption 勾選 Use SSL encryption
+
+7. Authentication 勾選 Yes Use SMTP authentication
+
+8. Username 欄位填入要用來寄信的 Gmail 帳號: 例如, myaccount@my.domain
+
+9. Password 欄位填入與寄信 Gmail 帳號對應的密碼
+
+10 儲存設定後, 利用下方的寄信測試確認已經正確設定</t>
+<t tx="amd.20150329082932.4">http://wordpress-2015course.rhcloud.com</t>
+<t tx="amd.20150329082932.5">725</t>
+<t tx="amd.20150329082932.7">category:2015 協同產品設計實習(教材專用)
+tags:課前準備, Scrum, Kanban 機械設計
+
+Kanban and Scrum: &lt;a href="https://ruddyblog.wordpress.com/tag/scrum/"&gt;https://ruddyblog.wordpress.com/tag/scrum/&lt;/a&gt;
+
+英文本: &lt;a href="http://wwwis.win.tue.nl/2R690/doc/ScrumAndXpFromTheTrenchesonline07-31.pdf"&gt;Scrum and XP from the Trenches&lt;/a&gt;
+
+中文本: &lt;a href="http://www.infoq.com/resource/news/2007/06/scrum-xp-book/en/resources/ScrumAndXpFromTheTrenchesonline_TraditionalChinese.pdf"&gt;Scrum 與 XP 的實戰經驗&lt;/a&gt;</t>
+<t tx="amd.20150329082932.8">733</t>
 </tnodes>
 </leo_file>
